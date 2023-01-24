@@ -1,0 +1,52 @@
+<button (click)="backClicked();" class="back-btn"><span class="material-icons">keyboard_backspace</span>Back</button>
+<form  name="registerForm" novalidate>
+  <h1>Management System</h1>
+  <div class="form-wrapper">
+    <div class="form-title">
+      <h3>Create New Account</h3>
+    </div>
+    <div class="form-field">
+      <mat-form-field appearance="outline" class="element-full-width">
+        <mat-label>Enter Full Name:</mat-label>
+        <input formControlName="fullName" id="fullName" matInput maxlength="50" name="fullName" type="text">
+        <mat-icon matSuffix>text_format</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="form-field">
+    <mat-form-field appearance="outline" class="element-full-width">
+      <mat-label>Enter Birthdate:</mat-label>
+      <input [matDatepicker]="release_picker2" autocomplete="off" formControlName="birthDate" id="birthDate"
+             matInput name="birthDate" value="">
+      <mat-datepicker-toggle [for]="release_picker2" matSuffix></mat-datepicker-toggle>
+      <mat-datepicker #release_picker2></mat-datepicker>
+    </mat-form-field>
+    </div>
+    <div class="form-field">
+      <mat-form-field appearance="outline" class="element-full-width">
+        <mat-label>Enter Mobile Number:</mat-label>
+        <input formControlName="mobile" id="mobile" matInput maxlength="50" name="mobile" type="number">
+
+        <mat-icon matSuffix>phone_iphone</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="form-field">
+      <mat-form-field appearance="outline" class="element-full-width">
+        <mat-label>Enter Email Address:</mat-label>
+        <input formControlName="email" id="email" matInput maxlength="50" name="email" type="email">
+
+        <mat-icon matSuffix>mail_outline</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="form-field">
+      <mat-form-field appearance="outline" class="element-full-width">
+        <mat-label>Enter Password:</mat-label>
+        <input formControlName="password"  matInput name="password" type="password">
+        <mat-icon matSuffix>lock</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="form-btn">
+      <button class="full-btn" type="submit">Submit</button>
+    </div>
+  </div>
+</form>
+

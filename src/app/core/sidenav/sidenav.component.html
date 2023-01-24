@@ -1,0 +1,44 @@
+<div class="main-side-nav">
+  <mat-toolbar class="dashboard-logo">
+    <!-- <h1>M<span class="hideon">ulti</span> <span class="font300">Q<span class="hideon">os</span></span></h1> -->
+    <h1 style="height: 100%;"><img alt="icon" src="assets/images/loginLogo.svg" style="max-height: 100%;"/></h1>
+  </mat-toolbar>
+  <ul (mouseenter)="mouseHover()" (mouseleave)="mouseOut()" class="side-nav">
+    <li>
+      <div mat-list-item>
+        <a class="link-menu" routerLink="/dashboard" routerLinkActive="active-link">
+          <span class="material-icons">dashboard</span><span class="nav-caption">Dashboard</span>
+        </a>
+      </div>
+    </li>
+    <li>
+      <div mat-list-item>
+        <a class="link-menu" routerLink="/productlist" routerLinkActive="active-link">
+          <span class="material-icons">view_list</span><span class="nav-caption">Products Management</span>
+        </a>
+      </div>
+    </li>
+
+    <li>
+      <div mat-list-item>
+        <a class="link-menu" routerLink="/userlist" routerLinkActive="active-link">
+          <span class="material-icons">people</span><span class="nav-caption">Users Management</span>
+        </a>
+      </div>
+    </li>
+    <li>
+      <div mat-list-item>
+        <a class="link-menu" routerLink="/productlist" routerLinkActive="active-link">
+          <span class="material-icons">view_module</span><span class="nav-caption">Category</span>
+        </a>
+      </div>
+    </li>
+    <li>
+      <div mat-list-item>
+        <a class="link-menu" routerLink="/productlist" routerLinkActive="active-link">
+          <span class="material-icons">category</span><span class="nav-caption">Sub Category</span>
+        </a>
+      </div>
+    </li>
+  </ul>
+</div>
