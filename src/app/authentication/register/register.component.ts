@@ -45,7 +45,6 @@ export class RegisterComponent implements OnInit {
     onSubmit() {
         if (this.registerForm.valid) {
             this.userData = this.registerForm.value;
-            console.log("isSubmitted first", this.isSubmitted)
             this.isSubmitted = this.adminApiService.registerUserService(this.userData);
             swal.fire({
                 icon:'success',
