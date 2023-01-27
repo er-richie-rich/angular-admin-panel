@@ -51,7 +51,7 @@
         <div class="form-field">
             <mat-form-field appearance="outline" class="element-full-width">
                 <mat-label>Enter Email Address:</mat-label>
-                <input formControlName="email" id="email" matInput maxlength="50" name="email" type="email">
+                <input formControlName="email" id="email" autocomplete="off" matInput maxlength="50" name="email" type="email">
                 <mat-icon matSuffix>mail_outline</mat-icon>
                 <mat-error *ngIf="registerForm.get('email')!.hasError('required')">THIS FIELD IS REQUIRED.</mat-error>
                 <mat-error *ngIf="registerForm.get('email')!.hasError('pattern')">ENTER VALID EMAIL ADDRESS.</mat-error>
@@ -60,15 +60,14 @@
         <div class="form-field">
             <mat-form-field appearance="outline" class="element-full-width">
                 <mat-label>Enter Password:</mat-label>
-                <input formControlName="password" matInput name="password" type="password">
+                <input formControlName="password" matInput name="password" type="password" autocomplete="off">
                 <mat-icon matSuffix>lock</mat-icon>
                 <mat-error *ngIf="registerForm.get('password')!.hasError('required')">THIS FIELD IS REQUIRED.
                 </mat-error>
             </mat-form-field>
         </div>
         <div class="form-btn">
-
-                        <button (click)="onSubmit()" class="full-btn">Submit</button>
+	        <button (click)="onSubmit()" class="full-btn">Submit</button>
         </div>
     </div>
 </form>
