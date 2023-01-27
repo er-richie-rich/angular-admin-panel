@@ -12,7 +12,10 @@ import { HomeLayoutComponent } from './layout/home-layout/home-layout.component'
 import {AuthenticationModule} from "./authentication/authentication.module";
 import {CoreModule} from "./core/core.module";
 import {DashboardModule} from "./dashboard/dashboard.module";
-import {ReactiveFormsModule} from "@angular/forms";
+import {ReactiveFormsModule,FormsModule} from "@angular/forms";
+import {DatePipe} from '@angular/common';
+import {MAT_DATE_LOCALE} from "@angular/material/core";
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -27,9 +30,9 @@ import {ReactiveFormsModule} from "@angular/forms";
         BrowserAnimationsModule,
         NgbModule, MaterialUiModule,
         AuthenticationModule,
-        CoreModule,DashboardModule,ReactiveFormsModule
+        CoreModule,DashboardModule,ReactiveFormsModule,FormsModule,MatDatepickerModule
     ],
-  providers: [],
+  providers: [DatePipe,{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

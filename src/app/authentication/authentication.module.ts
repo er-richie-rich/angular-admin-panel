@@ -7,7 +7,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import {MaterialUiModule} from "../material-ui/material-ui.module";
 import { RegisterComponent } from './register/register.component';
-
+import {FormsModule,ReactiveFormsModule} from "@angular/forms";
+import {Router} from "@angular/router";
+Router
 @NgModule({
   declarations: [
     LoginComponent,
@@ -17,7 +19,8 @@ import { RegisterComponent } from './register/register.component';
   ],
   imports: [
     CommonModule,
-    AuthenticationRoutingModule,MaterialUiModule
-  ]
+    AuthenticationRoutingModule,MaterialUiModule,FormsModule,ReactiveFormsModule
+  ],
+  providers : []
 })
 export class AuthenticationModule { }

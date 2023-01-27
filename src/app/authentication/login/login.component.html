@@ -1,35 +1,35 @@
-<form  name="loginForm" novalidate>
-  <h1>Management System</h1>
-  <div class="form-wrapper">
-    <div class="form-title">
-      <h3>Login</h3>
-      <p>Access to your Account</p>
-    </div>
-    <div class="form-field">
-      <mat-form-field appearance="outline" class="element-full-width">
-        <mat-label>Enter Email Address</mat-label>
-        <input formControlName="email" id="email" matInput maxlength="50" name="email" type="email">
+<form [formGroup]="loginForm">
+    <h1>Management System</h1>
+    <div class="form-wrapper">
+        <div class="form-title">
+            <h3>Login</h3>
+            <p>Access to your Account</p>
+        </div>
+        <div class="form-field">
+            <mat-form-field appearance="outline" class="element-full-width">
+                <mat-label>Enter Email Address</mat-label>
+                <input formControlName="email"  id="email" matInput maxlength="50" name="email" type="email">
 
-        <mat-icon matSuffix>mail_outline</mat-icon>
-      </mat-form-field>
-    </div>
-    <div class="form-field">
-      <mat-form-field appearance="outline" class="element-full-width">
-        <mat-label>Password</mat-label>
-        <input formControlName="password"  matInput name="password" type="password">
-        <mat-icon matSuffix>lock</mat-icon>
-      </mat-form-field>
-    </div>
-    <div class="remember-forgot">
-      <mat-checkbox class="remember-check" formControlName="isRemberMeChecked">Remember Me</mat-checkbox>
-      <a class="forgot-link" routerLink="/forgot-password">Forgot Password?</a>
-    </div>
-    <div class="form-btn">
-      <button class="full-btn" type="submit">Submit</button>
-    </div>
-    <div class="text-center">
-      <a  routerLink="register">Create New Account</a>
-    </div>
+                <mat-icon matSuffix>mail_outline</mat-icon>
+            </mat-form-field>
+        </div>
+        <div class="form-field">
+            <mat-form-field appearance="outline" class="element-full-width">
+                <mat-label>Password</mat-label>
+                <input formControlName="password" matInput name="password" type="password">
+                <mat-icon matSuffix>lock</mat-icon>
+            </mat-form-field>
+        </div>
+        <div class="remember-forgot">
+            <mat-checkbox class="remember-check" >Remember Me</mat-checkbox>
+            <a class="forgot-link" routerLink="/forgot-password">Forgot Password?</a>
+        </div>
+        <div class="form-btn">
+            <button (click)="onLogin()" class="full-btn">Submit</button>
+        </div>
+        <div class="text-center">
+            <a routerLink="register">Create New Account</a>
+        </div>
 
-  </div>
+    </div>
 </form>
