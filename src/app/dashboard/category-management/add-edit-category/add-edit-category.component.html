@@ -1,0 +1,49 @@
+<section class="dashboard-content">
+    <div class="box-style-breadcrumb p-4">
+        <!--BreadCrumb-->
+        <ul class="breadcrumb">
+            <li class="pointer-event" routerLink="/home/category-management">Category management</li>
+            <li>Add Category</li>
+        </ul>
+        <!--BreadCrumb-->
+    </div>
+    <form [formGroup]=addCategoryForm  class="w-100" >
+        <div class="box-style-breadcrumb mt-4 p-5">
+            <div class="form-main">
+                <div class="form-row-wrapper">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-field">
+                                <mat-form-field appearance="outline" class="element-full-width">
+                                    <mat-label>Category Name</mat-label>
+                                    <input autocomplete="off" formControlName="categoryName" matInput maxlength="150" name="categoryName" required type="text"/>
+                                    <mat-error *ngIf="addCategoryForm.get('categoryName')!.hasError('required')">THIS FIELD IS REQUIRED.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-field">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Status</mat-label>
+                                    <mat-select autocomplete="off" formControlName="categoryStatus" matNativeControl  required>
+                                        <mat-option value="0">Active</mat-option>
+                                        <mat-option value="1">Inactive</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="addCategoryForm.get('categoryStatus')!.hasError('required')">THIS FIELD IS REQUIRED.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <input formControlName="categoryId" type="hidden" >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-footer box-style-breadcrumb mt-3 p-3">
+            <button (click)="onAddCategoryFormSave()" class="btn-style red-btn">Save</button>
+            <button class="btn-style black-btn" routerLink="/project-management/" type="reset">Back</button>
+        </div>
+    </form>
+</section>
+

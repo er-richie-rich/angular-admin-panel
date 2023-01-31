@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule,Title } from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -18,6 +18,7 @@ import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {HeaderComponent} from "./core/header/header.component";
 import {FooterComponent} from "./core/footer/footer.component";
 import {SidenavComponent} from "./core/sidenav/sidenav.component";
+
 
 @NgModule({
     declarations: [
@@ -39,7 +40,7 @@ import {SidenavComponent} from "./core/sidenav/sidenav.component";
         ReactiveFormsModule,
         FormsModule,
     ],
-    providers: [DatePipe,LowerCasePipe,{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' } ],
+    providers: [DatePipe,LowerCasePipe,{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' } ,Title],
     bootstrap: [AppComponent]
 })
 export class AppModule {

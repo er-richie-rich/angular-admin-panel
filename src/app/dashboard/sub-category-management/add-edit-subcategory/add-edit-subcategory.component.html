@@ -1,0 +1,63 @@
+<section class="dashboard-content">
+    <div class="box-style-breadcrumb p-4">
+        <!--BreadCrumb-->
+        <ul class="breadcrumb">
+            <li class="pointer-event" routerLink="/home/category-management">Category management</li>
+            <li>Add Sub Category</li>
+        </ul>
+        <!--BreadCrumb-->
+    </div>
+    <form [formGroup]=addSubCategoryForm class="w-100">
+        <div class="box-style-breadcrumb mt-4 p-5">
+            <div class="form-main">
+                <div class="form-row-wrapper">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-field">
+                                <mat-form-field appearance="outline" class="element-full-width">
+                                    <mat-label>Sub Category Name</mat-label>
+                                    <input autocomplete="off" formControlName="subcategoryName" matInput  maxlength="150" name="subcategoryName" required type="text"/>
+                                    <mat-error *ngIf="addSubCategoryForm.get('subcategoryName')!.hasError('required')">THIS FIELD IS REQUIRED.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-field">
+                                <mat-form-field appearance="outline"  class="element-full-width" >
+                                    <mat-label>Category Name</mat-label>
+                                    <mat-select formControlName="categoryName" name="categoryName" >
+                                        <mat-option *ngFor="let catagory of categoriesarr" [value]="catagory.categoryId">
+                                            {{catagory.categoryName}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="addSubCategoryForm.get('categoryName')!.hasError('required')">THIS FIELD IS REQUIRED.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-field">
+                                <mat-form-field appearance="outline"  class="element-full-width">
+                                    <mat-label>Status</mat-label>
+                                    <mat-select autocomplete="off" formControlName="subcategoryStatus"  matNativeControl name="subcategoryStatus"  required >
+                                        <mat-option value="0">Active</mat-option>
+                                        <mat-option value="1">Inactive</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="addSubCategoryForm.get('subcategoryStatus')!.hasError('required')">THIS FIELD IS REQUIRED.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <input formControlName="subcategoryId"  name="subcategoryId" type="hidden"  >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-footer box-style-breadcrumb mt-3 p-3">
+            <button (click)="onAddSubCategoryFormSave()" class="btn-style red-btn" >Save</button>
+            <button class="btn-style black-btn" routerLink="/project-management/" type="reset">Back</button>
+        </div>
+    </form>
+</section>
+

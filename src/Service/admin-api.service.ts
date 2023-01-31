@@ -4,15 +4,30 @@ import {Injectable} from '@angular/core';
 	providedIn: 'root'
 })
 export class AdminApiService {
-	data: any = localStorage.getItem('userList')
-	userList: any
+	userData: any = localStorage.getItem('userList')
+	categoryData:any =localStorage.getItem('categoryList')
+	subcategoryData:any =localStorage.getItem('subcategoryList')
+	userList: any;
+	categoryList:any;
+	subcategoryList: any;
 	result: boolean = false;
+
 	
 	constructor() {
-		if (this.data === null || this.data === undefined) {
+		if (this.userData === null || this.userData === undefined) {
 			this.userList = [];
 		} else {
-			this.userList = JSON.parse(this.data);
+			this.userList = JSON.parse(this.userData);
+		}
+		if (this.categoryData === null || this.categoryData === undefined) {
+			this.categoryList = [];
+		} else {
+			this.categoryList = JSON.parse(this.categoryData);
+		}
+		if (this.subcategoryData === null || this.subcategoryData === undefined) {
+			this.subcategoryList = [];
+		} else {
+			this.subcategoryList = JSON.parse(this.subcategoryData);
 		}
 	}
 	
@@ -64,5 +79,22 @@ export class AdminApiService {
 		 localStorage.setItem('userList', JSON.stringify(this.userList));
 		 return true
 	 }
-	
+
+	 // add category service
+	addCategoryService(categoryitem: any) {
+		this.categoryList.push(categoryitem);
+		localStorage.setItem('categoryList', JSON.stringify(this.categoryList));
+		return true;
+	}
+	// list category service
+	listCategoryService() {
+		return this.categoryList;
+	}
+
+	// add sub category service
+	addSubCategoryService(subcategoryitem: any) {
+		this.subcategoryList.push(subcategoryitem);
+		localStorage.setItem('subcategoryList', JSON.stringify(this.subcategoryList));
+		return true;
+	}
 }

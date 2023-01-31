@@ -5,16 +5,28 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import {MAT_DATE_LOCALE} from "@angular/material/core";
-
+import { ProductManagementComponent } from './product-management/product-management.component';
+import { AddEditProductComponent } from './product-management/add-edit-product/add-edit-product.component';
+import { CategoryManagementComponent } from './category-management/category-management.component';
+import { SubCategoryManagementComponent } from './sub-category-management/sub-category-management.component';
+import { AddEditCategoryComponent } from './category-management/add-edit-category/add-edit-category.component';
+import { AddEditSubcategoryComponent } from './sub-category-management/add-edit-subcategory/add-edit-subcategory.component';
+import {FormsModule,ReactiveFormsModule} from "@angular/forms";
 @NgModule({
   declarations: [
     UserManagementComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
+    ProductManagementComponent,
+    AddEditProductComponent,
+    CategoryManagementComponent,
+    SubCategoryManagementComponent,
+    AddEditCategoryComponent,
+    AddEditSubcategoryComponent
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    MaterialUiModule
+    MaterialUiModule,FormsModule,ReactiveFormsModule
   ],
   exports:[MaterialUiModule],
   providers: [DatePipe,LowerCasePipe],

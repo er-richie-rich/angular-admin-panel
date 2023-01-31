@@ -1,0 +1,62 @@
+<section class="dashboard-content">
+    <div class="box-style-breadcrumb p-4">
+        <!--BreadCrumb-->
+        <ul class="breadcrumb">
+            <li class="pointer-event" routerLink="/home/product-management">Product management</li>
+            <li>Add Product</li>
+        </ul>
+        <!--BreadCrumb-->
+    </div>
+    <form class="w-100" name="addProjectForm"
+          novalidate>
+        <div class="box-style-breadcrumb mt-4 p-5">
+            <div class="form-main">
+                <h2></h2>
+
+
+                <div class="form-row-wrapper">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-field">
+                                <mat-form-field appearance="outline" class="element-full-width">
+                                    <mat-label>Product Code</mat-label>
+                                    <input matInput maxlength="150" name="projectCode" required type="text"/>
+
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-field">
+                                <mat-form-field appearance="outline" class="element-full-width">
+                                    <mat-label>Product Name</mat-label>
+                                    <input matInput maxlength="150" name="projectName" required type="text"/>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-field">
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-field">
+                                <mat-form-field appearance="outline" class="element-full-width">
+                                    <mat-label>Product Description</mat-label>
+                                    <textarea formControlName="projectDescription" matInput name="projectDescription"
+                                              required type="text"></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-footer box-style-breadcrumb mt-3 p-3">
+            <button class="btn-style red-btn" type="submit">Save</button>
+            <button class="btn-style black-btn" routerLink="/project-management/" type="reset">Back</button>
+        </div>
+    </form>
+
+</section>

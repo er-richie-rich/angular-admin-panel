@@ -1,23 +1,49 @@
 import {Component, Inject, OnInit, Renderer2} from '@angular/core';
 import {DOCUMENT} from "@angular/common";
-import {Router} from "@angular/router";
+import {Router,ActivatedRoute,NavigationEnd} from "@angular/router";
+import { Title } from '@angular/platform-browser';
 
+import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
+  title:any = "Management System"
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private titleService: Title
 
-  ) { }
+  ) {
+    this.router.events
+        .pipe(filter((event) => event instanceof NavigationEnd))
+        .subscribe(() => {
+          const rt = this.getChild(this.activatedRoute);
+
+          rt.data.subscribe((data: any) => {
+            this.title = data.title;
+            this.titleService.setTitle(this.title);
+          });
+        });
+  }
 
   ngOnInit(): void {
-  }
+    this.router.events
+        .pipe(filter((event) => event instanceof NavigationEnd))
+        .subscribe(() => {
+          const rt = this.getChild(this.activatedRoute);
+
+          rt.data.subscribe((data: any) => {
+            this.title = data.title;
+            this.titleService.setTitle(this.title);
+          });
+        });
+
+}
   callSidemenuCollapse() {
     const hasClass = this.document.body.classList.contains('side-closed');
     if (hasClass) {
@@ -30,5 +56,13 @@ export class HeaderComponent implements OnInit {
   }
   logOUT() {
     this.router.navigate(['/']);
+  }
+
+  getChild(activatedRoute: ActivatedRoute): any {
+    if (activatedRoute.firstChild) {
+      return this.getChild(activatedRoute.firstChild);
+    } else {
+      return activatedRoute;
+    }
   }
 }
