@@ -20,8 +20,8 @@ export class RegisterComponent implements OnInit {
     constructor(private fb: FormBuilder,private router: Router ,private _location: Location, private adminApiService: AdminApiService) {
         this.registerForm = this.fb.group({
             fullName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(40)]],
-            birthDate: ['', [Validators.required]],
-            mobile: [,[Validators.required, Validators.minLength(10), Validators.maxLength(15)]],
+            birthDate: ["",[Validators.required]],
+            mobile: ["",[Validators.required, Validators.minLength(10), Validators.maxLength(15)]],
             email: ['', [Validators.required, Validators.pattern('\\w+([-+.]\\w+)*@yahoo.(com|in)|gmail.(com|in)|hotmail.(com|in)|redmail.(com|in)|microsoft.(com|in)')]],
             password: ['', [Validators.required]]
         });
@@ -42,6 +42,13 @@ export class RegisterComponent implements OnInit {
     //         }
     //     })
     // }
+
+    test(){
+        localStorage.setItem("date", JSON.stringify(this.registerForm.value));
+        console.log(this.registerForm.value)
+
+    }
+
     onSubmit() {
         if (this.registerForm.valid) {
             this.userData = this.registerForm.value;

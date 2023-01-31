@@ -38,7 +38,7 @@ export class ResetPasswordComponent implements OnInit {
 						text:'Your Password Is Reseted Successfully',
 					}).then(res=>{
 						if(res){
-							this.router.navigate(['/login'])
+							this.router.navigate(['/'])
 						}
 					})
 				}

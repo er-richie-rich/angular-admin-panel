@@ -1,9 +1,10 @@
 .title-center {
   flex: 1 1 auto;
   color: white;
+  font-size: 16px;
 }
 footer{
-  position:fixed;
+position: sticky;
   bottom:0px;
   background-color:#ff070c;;
   width:100%;

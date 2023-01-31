@@ -1,9 +1,11 @@
+<section class="dashboard-content">
 <mat-form-field>
   <mat-label>Filter</mat-label>
   <input #input (keyup)="applyFilter($event)" matInput placeholder="Ex. Mia">
 </mat-form-field>
 
 <div class="mat-elevation-z8">
+  <div class="table-contente">
   <table [dataSource]="dataSource" mat-table matSort>
 
     <ng-container matColumnDef="select">
@@ -24,27 +26,29 @@
     </ng-container>
 
     <!-- ID Column -->
-    <ng-container matColumnDef="id">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header> ID </th>
-      <td *matCellDef="let row" mat-cell> {{row.id}} </td>
-    </ng-container>
+
 
     <!-- Progress Column -->
-    <ng-container matColumnDef="progress">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header> Progress </th>
-      <td *matCellDef="let row" mat-cell> {{row.progress}}% </td>
+    <ng-container matColumnDef="fullname">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header> Full Name </th>
+      <td *matCellDef="let row" mat-cell> {{row.fullName}}</td>
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header> Name </th>
-      <td *matCellDef="let row" mat-cell> {{row.name}} </td>
+    <ng-container matColumnDef="birthdate">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header> Birth Date </th>
+      <td *matCellDef="let row" mat-cell> {{row.birthDate |  date : "dd/MM/YYYY"}} </td>
     </ng-container>
 
     <!-- Fruit Column -->
-    <ng-container matColumnDef="fruit">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header> Fruit </th>
-      <td *matCellDef="let row" mat-cell> {{row.fruit}} </td>
+    <ng-container matColumnDef="mobile">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>Mobile</th>
+      <td *matCellDef="let row" mat-cell> {{row.mobile}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header> Email </th>
+      <td *matCellDef="let row" mat-cell style="text-transform: lowercase;"> {{row.email}} </td>
     </ng-container>
 
     <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
@@ -55,6 +59,7 @@
       <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
     </tr>
   </table>
-
+</div>
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
 </div>
+</section>

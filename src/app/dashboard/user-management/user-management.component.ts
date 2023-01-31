@@ -7,43 +7,44 @@ import {SelectionModel} from '@angular/cdk/collections';
 // import {HttpClient} from "@angular/common/http";
 export interface UserData {
   id: string;
-  name: string;
-  progress: string;
-  fruit: string;
+  fullname:string,
+  birthdate:string, mobile:string,
+  email:string,
+  password:string
 }
 
-/** Constants used to fill up our data base. */
-const FRUITS: string[] = [
-  'blueberry',
-  'lychee',
-  'kiwi',
-  'mango',
-  'peach',
-  'lime',
-  'pomegranate',
-  'pineapple',
-];
-const NAMES: string[] = [
-  'Maia',
-  'Asher',
-  'Olivia',
-  'Atticus',
-  'Amelia',
-  'Jack',
-  'Charlotte',
-  'Theodore',
-  'Isla',
-  'Oliver',
-  'Isabella',
-  'Jasper',
-  'Cora',
-  'Levi',
-  'Violet',
-  'Arthur',
-  'Mia',
-  'Thomas',
-  'Elizabeth',
-];
+// /** Constants used to fill up our data base. */
+// const FRUITS: string[] = [
+//   'blueberry',
+//   'lychee',
+//   'kiwi',
+//   'mango',
+//   'peach',
+//   'lime',
+//   'pomegranate',
+//   'pineapple',
+// ];
+// const NAMES: string[] = [
+//   'Maia',
+//   'Asher',
+//   'Olivia',
+//   'Atticus',
+//   'Amelia',
+//   'Jack',
+//   'Charlotte',
+//   'Theodore',
+//   'Isla',
+//   'Oliver',
+//   'Isabella',
+//   'Jasper',
+//   'Cora',
+//   'Levi',
+//   'Violet',
+//   'Arthur',
+//   'Mia',
+//   'Thomas',
+//   'Elizabeth',
+// ];
 
 
 @Component({
@@ -52,15 +53,16 @@ const NAMES: string[] = [
   styleUrls: ['./user-management.component.scss']
 })
 export class UserManagementComponent implements OnInit {
-  displayedColumns: string[] = ['select','id', 'name', 'progress', 'fruit'];
+  displayedColumns: string[] = ['select','fullname', 'birthdate', 'mobile','email'];
   dataSource: MatTableDataSource<UserData>;
   selection = new SelectionModel<UserData>(true, []);
+  data:any =[]
   @ViewChild(MatPaginator) paginator:any= MatPaginator;
 
   @ViewChild(MatSort) sort:any= MatSort;
   constructor() {
-    const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
-
+     this.data = localStorage.getItem('userList')
+    const users =JSON.parse(this.data);
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(users);
   }
@@ -101,17 +103,4 @@ export class UserManagementComponent implements OnInit {
     }
   }
 }
-function createNewUser(id: number): UserData {
-  const name =
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-    ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-    '.';
 
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
-  };
-}

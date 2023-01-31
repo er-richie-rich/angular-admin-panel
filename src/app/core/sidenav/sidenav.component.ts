@@ -57,4 +57,5 @@ export class SidenavComponent implements OnInit {
       this.renderer.addClass(this.document.body, 'submenu2-open');
     }
   }
+
 }

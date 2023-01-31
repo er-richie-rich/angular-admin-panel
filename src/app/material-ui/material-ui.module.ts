@@ -28,6 +28,7 @@ import {CdkAccordionModule} from '@angular/cdk/accordion';
 import {MatRadioModule} from "@angular/material/radio";
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatGridListModule} from "@angular/material/grid-list";
 
 @NgModule({
   declarations: [],
@@ -61,6 +62,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     MatTooltipModule,
     CdkAccordionModule,
     MatRadioModule,
+    MatGridListModule
   ],
   exports: [
     MatTabsModule,
@@ -90,7 +92,8 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     MatSlideToggleModule,
     MatTooltipModule,
     CdkAccordionModule,
-    MatRadioModule,MatButtonToggleModule
+    MatRadioModule,MatButtonToggleModule,
+    MatGridListModule
 
   ]
 })

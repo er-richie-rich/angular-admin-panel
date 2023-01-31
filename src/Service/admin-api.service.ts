@@ -44,7 +44,9 @@ export class AdminApiService {
 	// forgot password api
 	forgotPasswordService(email: any) {
 		let object = this.userList.find((object: { email: any }) => (object.email === email));
+		console.log(this.userList)
 		if (object) {
+
 			if (object.email === email) {
 				this.result = true
 			}

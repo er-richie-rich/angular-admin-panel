@@ -24,8 +24,8 @@
         <div class="form-field">
             <mat-form-field appearance="outline" class="element-full-width">
                 <mat-label>Enter Birthdate:</mat-label>
-                <input (click)="release_picker2.open()" (focus)="release_picker2.open()" [matDatepicker]="release_picker2" autocomplete="off" formControlName="birthDate" id="birthDate"
-                       matInput name="birthDate" required>
+                <input  (click)="release_picker2.open()" (focus)="release_picker2.open()" [matDatepicker]="release_picker2" autocomplete="off" formControlName="birthDate" id="birthDate"
+                       matInput name="birthDate" required  type="text" value="">
                 <mat-datepicker-toggle [for]="release_picker2" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #release_picker2></mat-datepicker>
                 <mat-error *ngIf="registerForm.get('birthDate')!.hasError('required')">THIS FIELD IS REQUIRED.

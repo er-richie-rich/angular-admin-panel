@@ -917,7 +917,6 @@ body {
 
 /* Dashboard */
 .dashboard-content {
-  margin-top: 64px;
   min-height: calc(100vh - 64px);
   padding: 30px;
   @media (max-width: $breakpoint-desktop) {
