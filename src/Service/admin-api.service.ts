@@ -97,4 +97,8 @@ export class AdminApiService {
 		localStorage.setItem('subcategoryList', JSON.stringify(this.subcategoryList));
 		return true;
 	}
+	// list category service
+	listSuCategoryService() {
+		return this.subcategoryList;
+	}
 }

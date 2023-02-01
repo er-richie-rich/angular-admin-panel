@@ -5,11 +5,10 @@ import {MatPaginator} from "@angular/material/paginator";
 import{AdminApiService} from "../../../Service/admin-api.service";
 
 
-export interface UserData {
+export interface categoryData {
   id: string;
   categoryname: string;
   status: string;
-
 }
 
 
@@ -20,7 +19,7 @@ export interface UserData {
 })
 export class CategoryManagementComponent implements OnInit {
   displayedColumns: string[] = ['id', 'categoryname', 'status'];
-  dataSource: MatTableDataSource<UserData>;
+  dataSource: MatTableDataSource<categoryData>;
 
   @ViewChild(MatPaginator) paginator:any= MatPaginator;
   @ViewChild(MatSort) sort:any= MatSort;
