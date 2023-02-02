@@ -1,68 +1,52 @@
 <section class="dashboard-content">
-<mat-form-field>
-  <mat-label>Filter</mat-label>
-  <input #input (keyup)="applyFilter($event)" matInput placeholder="Ex. Mia">
-</mat-form-field>
+    <div class="box-style-breadcrumb p-4 " style="height: 65px">
+        <div class="float-start" style="font-size: 16px; width:90%;padding: 5px;">User Management</div>
+    </div>
+    <mat-form-field class="mt-3 ps-3">
+        <mat-label>Filter</mat-label>
+        <input #input (keyup)="applyFilter($event)" matInput placeholder="Ex. Mia">
+    </mat-form-field>
 
-<div class="mat-elevation-z8">
-  <div class="table-contente">
-  <table [dataSource]="dataSource" mat-table matSort>
-
-    <ng-container matColumnDef="select">
-      <th *matHeaderCellDef mat-header-cell>
-        <mat-checkbox (change)="$event ? toggleAllRows() : null"
-                      [aria-label]="checkboxLabel()"
-                      [checked]="selection.hasValue() && isAllSelected()"
-                      [indeterminate]="selection.hasValue() && !isAllSelected()">
-        </mat-checkbox>
-      </th>
-      <td *matCellDef="let row" mat-cell>
-        <mat-checkbox (change)="$event ? selection.toggle(row) : null"
-                      (click)="$event.stopPropagation()"
-                      [aria-label]="checkboxLabel(row)"
-                      [checked]="selection.isSelected(row)">
-        </mat-checkbox>
-      </td>
-    </ng-container>
-
-    <!-- ID Column -->
+    <div class="mat-elevation-z8">
+        <div class="table-contente">
+            <table [dataSource]="dataSource" mat-table matSort>
+                <ng-container matColumnDef="id">
+                    <th *matHeaderCellDef mat-header-cell> ID</th>
+                    <td *matCellDef="let row; let i=index" mat-cell>{{i + 1}} </td>
+                </ng-container>
+                <ng-container matColumnDef="fullname">
+                    <th *matHeaderCellDef mat-header-cell mat-sort-header> Full Name</th>
+                    <td *matCellDef="let row" mat-cell> {{row.fullName}}</td>
+                </ng-container>
 
 
-    <!-- Progress Column -->
-    <ng-container matColumnDef="fullname">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header> Full Name </th>
-      <td *matCellDef="let row" mat-cell> {{row.fullName}}</td>
-    </ng-container>
+                <ng-container matColumnDef="birthdate">
+                    <th *matHeaderCellDef mat-header-cell mat-sort-header> Birth Date</th>
+                    <td *matCellDef="let row" mat-cell> {{row.birthDate |  date : "dd/MM/YYYY"}} </td>
+                </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="birthdate">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header> Birth Date </th>
-      <td *matCellDef="let row" mat-cell> {{row.birthDate |  date : "dd/MM/YYYY"}} </td>
-    </ng-container>
+                <ng-container matColumnDef="mobile">
+                    <th *matHeaderCellDef mat-header-cell mat-sort-header>Mobile</th>
+                    <td *matCellDef="let row" mat-cell> {{row.mobile}} </td>
+                </ng-container>
 
-    <!-- Fruit Column -->
-    <ng-container matColumnDef="mobile">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>Mobile</th>
-      <td *matCellDef="let row" mat-cell> {{row.mobile}} </td>
-    </ng-container>
+                <ng-container matColumnDef="email">
+                    <th *matHeaderCellDef mat-header-cell mat-sort-header> Email</th>
+                    <td *matCellDef="let row" mat-cell style="text-transform: lowercase;"> {{row.email}} </td>
+                </ng-container>
 
-    <ng-container matColumnDef="email">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header> Email </th>
-      <td *matCellDef="let row" mat-cell style="text-transform: lowercase;"> {{row.email}} </td>
-    </ng-container>
+                <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
 
-    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-
-    <!-- Row shown when there is no matching data. -->
-<!--    <tr *matNoDataRow class="mat-row">-->
-<!--      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>-->
-<!--    </tr>-->
-    <tr *matNoDataRow class="mat-row">
-      <td class="mat-cell" colspan="4">No data found</td>
-    </tr>
-  </table>
-</div>
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
-</div>
+                <!-- Row shown when there is no matching data. -->
+                <!--    <tr *matNoDataRow class="mat-row">-->
+                <!--      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>-->
+                <!--    </tr>-->
+                <tr *matNoDataRow class="mat-row">
+                    <td class="mat-cell" colspan="4">No data found</td>
+                </tr>
+            </table>
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </div>
 </section>

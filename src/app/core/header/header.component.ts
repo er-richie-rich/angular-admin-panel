@@ -2,6 +2,7 @@ import {Component, Inject, OnInit, Renderer2} from '@angular/core';
 import {DOCUMENT} from "@angular/common";
 import {Router,ActivatedRoute,NavigationEnd} from "@angular/router";
 import { Title } from '@angular/platform-browser';
+import{AdminApiService} from "../../../Service/admin-api.service";
 
 import { filter } from 'rxjs/operators';
 @Component({
@@ -11,13 +12,14 @@ import { filter } from 'rxjs/operators';
 })
 export class HeaderComponent implements OnInit {
   title:any = "Management System"
+  user:any=this.adminApiService.listLoggedUserService()
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private titleService: Title
-
+    private titleService: Title,
+  private adminApiService:AdminApiService
   ) {
     this.router.events
         .pipe(filter((event) => event instanceof NavigationEnd))
@@ -54,8 +56,8 @@ export class HeaderComponent implements OnInit {
       this.renderer.addClass(this.document.body, 'submenu-closed');
     }
   }
-  logOUT() {
-    this.router.navigate(['/']);
+  logOut(){
+      this.adminApiService.logOutService()
   }
 
   getChild(activatedRoute: ActivatedRoute): any {

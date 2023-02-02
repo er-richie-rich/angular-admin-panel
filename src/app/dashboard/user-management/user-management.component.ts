@@ -21,7 +21,7 @@ export interface UserData {
   styleUrls: ['./user-management.component.scss']
 })
 export class UserManagementComponent implements OnInit {
-  displayedColumns: string[] = ['select','fullname', 'birthdate', 'mobile','email'];
+  displayedColumns: string[] = ['id','fullname', 'birthdate', 'mobile','email'];
 
   dataSource: any = new MatTableDataSource([]);
   selection = new SelectionModel<UserData>(true, []);
@@ -39,26 +39,6 @@ export class UserManagementComponent implements OnInit {
 
   }
 
-  isAllSelected() {
-    const numSelected = this.selection?.selected.length;
-    const numRows = this.dataSource.data?.length;
-    return numSelected === numRows;
-  }
-
-  toggleAllRows() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
-    }
-
-    this.selection.select(...this.dataSource.data);
-  }
-  checkboxLabel(row?: UserData): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
-  }
   ngOnInit(): void {
   }
 

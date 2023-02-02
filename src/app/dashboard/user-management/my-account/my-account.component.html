@@ -1,0 +1,78 @@
+<section class="dashboard-content">
+    <div class="account-wrapper">
+        <div class="account-list">
+            <div class="box-style">
+                <h3>My Accounts</h3>
+                <ul>
+                    <li routerLink="/home/my-account" routerLinkActive="active">Edit Profile</li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="form-content-box box-style">
+            <form [formGroup]=registerForm>
+                <h1>Management System</h1>
+                <div class="form-wrapper">
+                    <div class="form-title">
+                        <h3>Your Account</h3>
+                    </div>
+                    <div class="form-field">
+                        <mat-form-field appearance="outline" class="element-full-width">
+                            <mat-label>Enter Full Name:</mat-label>
+                            <input autocomplete="off" formControlName="fullName" id="fullName" matInput name="fullName" required
+                                   type="text">
+                            <mat-icon matSuffix>text_format</mat-icon>
+                            <mat-error *ngIf="registerForm.get('fullName')!.hasError('minlength')">FULL NAME MUST BE GREATER THEN 3
+                                CHARACTER !!
+                            </mat-error>
+                            <mat-error *ngIf="registerForm.get('fullName')!.hasError('maxlength')">FULL NAME MUST BE LESS THEN 40
+                                CHARACTER !!
+                            </mat-error>
+                            <mat-error *ngIf="registerForm.get('fullName')!.hasError('required')">THIS FIELD IS REQUIRED.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-field">
+                        <mat-form-field appearance="outline" class="element-full-width">
+                            <mat-label>Enter Birthdate:</mat-label>
+                            <input  (click)="release_picker2.open()" (focus)="release_picker2.open()" [matDatepicker]="release_picker2" autocomplete="off" formControlName="birthDate" id="birthDate"
+                                    matInput name="birthDate" required  type="text" value="">
+                            <mat-datepicker-toggle [for]="release_picker2" matSuffix></mat-datepicker-toggle>
+                            <mat-datepicker #release_picker2></mat-datepicker>
+                            <mat-error *ngIf="registerForm.get('birthDate')!.hasError('required')">THIS FIELD IS REQUIRED.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-field">
+                        <mat-form-field appearance="outline" class="element-full-width">
+                            <mat-label>Enter Mobile Number:</mat-label>
+                            <input autocomplete="mobile" formControlName="mobile" id="mobile" matInput
+                                   maxlength="15"
+                                   name="mobile" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" type="text">
+                            <mat-icon matSuffix>phone_iphone</mat-icon>
+                            <mat-error *ngIf="registerForm.get('mobile')!.hasError('minlength')">MOBILE NUMBER MUST BE 10
+                                DIGITS !!
+                            </mat-error>
+                            <mat-error *ngIf="registerForm.get('mobile')!.hasError('maxlength')"> MUST BE LESS THEN 15
+                                DIGITS !!
+                            </mat-error>
+                            <mat-error *ngIf="registerForm.get('mobile')!.hasError('required')">THIS FIELD IS REQUIRED.</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-field">
+                        <mat-form-field appearance="outline" class="element-full-width">
+                            <mat-label>Enter Email Address:</mat-label>
+                            <input autocomplete="off" formControlName="email" id="email" matInput maxlength="50" name="email" type="email">
+                            <mat-icon matSuffix>mail_outline</mat-icon>
+                            <mat-error *ngIf="registerForm.get('email')!.hasError('required')">THIS FIELD IS REQUIRED.</mat-error>
+                            <mat-error *ngIf="registerForm.get('email')!.hasError('pattern')">ENTER VALID EMAIL ADDRESS.</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-btn">
+                        <button (click)="onSubmit()" class="full-btn">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

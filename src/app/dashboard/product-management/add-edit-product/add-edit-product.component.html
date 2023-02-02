@@ -7,55 +7,97 @@
         </ul>
         <!--BreadCrumb-->
     </div>
-    <form class="w-100" name="addProjectForm"
-          novalidate>
-        <div class="box-style-breadcrumb mt-4 p-5">
-            <div class="form-main">
-                <h2></h2>
-
-
-                <div class="form-row-wrapper">
+    <form  [formGroup]=addProductForm name="addProductForm" >
+        <div class="box-style-breadcrumb mt-4 p-5 ">
+            <div class="form-main ">
+                         <div class="form-row-wrapper " >
                     <div class="row">
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <div class="form-field">
                                 <mat-form-field appearance="outline" class="element-full-width">
                                     <mat-label>Product Code</mat-label>
-                                    <input matInput maxlength="150" name="projectCode" required type="text"/>
-
+                                    <input autocomplete="off" formControlName="productCode" matInput maxlength="150" name="productCode" required type="text"/>
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <div class="form-field">
                                 <mat-form-field appearance="outline" class="element-full-width">
                                     <mat-label>Product Name</mat-label>
-                                    <input matInput maxlength="150" name="projectName" required type="text"/>
+                                    <input autocomplete="off" formControlName="productName" matInput maxlength="150" name="productName" required type="text"/>
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <div class="form-field">
-
+                                <mat-form-field appearance="outline"  class="element-full-width" >
+                                    <mat-label>Category Name</mat-label>
+                                    <mat-select  (selectionChange)="fetchSubCategory($event)" autocomplete="off" formControlName="categoryId" name="categoryId">
+                                        <mat-option *ngFor="let catagory of categoriesArr" [value]="catagory.categoryId">
+                                            {{catagory.categoryName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-field">
+                                <mat-form-field appearance="outline"  class="element-full-width" >
+                                    <mat-label>Subcategory Name</mat-label>
+                                    <mat-select autocomplete="off" formControlName="subCategoryId" name="subCategoryId">
+                                        <mat-option *ngFor="let subcatagory of subCategories" [value]="subcatagory.subcategoryId">
+                                            {{subcatagory.subcategoryName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-field">
+                                <mat-form-field appearance="outline" class="element-full-width">
+                                    <mat-label>Product Price</mat-label>
+                                    <input autocomplete="off" formControlName="productPrice" matInput maxlength="150" name="productPrice" required type="number" />
+                                    <mat-icon matSuffix>&#8377;</mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-field">
+                                <mat-form-field appearance="outline" class="element-full-width">
+                                    <mat-label>Product Stock</mat-label>
+                                    <input autocomplete="off" formControlName="productStock" matInput maxlength="150" name="productStock" required type="number" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-field">
+                                <mat-form-field appearance="outline"  class="element-full-width">
+                                    <mat-label>Status</mat-label>
+                                    <mat-select autocomplete="off"  autocomplete="off" formControlName="productStatus" matNativeControl name="productStatus"  required >
+                                        <mat-option value="1">Active</mat-option>
+                                        <mat-option value="0">Inactive</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
                             </div>
                         </div>
 
-                        <div class="col-sm-12">
+                        <div class="col-sm-8">
                             <div class="form-field">
                                 <mat-form-field appearance="outline" class="element-full-width">
                                     <mat-label>Product Description</mat-label>
-                                    <textarea formControlName="projectDescription" matInput name="projectDescription"
-                                              required type="text"></textarea>
+                                    <textarea autocomplete="off" formControlName="productDescription" matInput name="productDescription" placeholder="Ex.product color..." ></textarea>
                                 </mat-form-field>
                             </div>
                         </div>
+                        <input formControlName="productId"  name="productId" type="hidden"  >
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="form-footer box-style-breadcrumb mt-3 p-3">
-            <button class="btn-style red-btn" type="submit">Save</button>
-            <button class="btn-style black-btn" routerLink="/project-management/" type="reset">Back</button>
+            <button (click)="onSaveaddProductForm()" class="btn-style red-btn">Save</button>
+            <button class="btn-style black-btn" routerLink="/home/product-management/" type="reset">Back</button>
         </div>
     </form>
 

@@ -15,38 +15,54 @@ export class AddEditSubcategoryComponent implements OnInit {
   isSubmitted: boolean = false;
     categories=this.adminApiService.listCategoryService()
     categoriesarr=this.categories
-
-  constructor(private fb: FormBuilder, private router:Router,private adminApiService: AdminApiService) {
+    urlData:any
+  constructor(private fb: FormBuilder, private router:Router,private adminApiService: AdminApiService, private route:ActivatedRoute) {
     this.addSubCategoryForm = this.fb.group(
         {
           subcategoryId:[''],
           subcategoryName:['',Validators.required],
-          categoryName:['',Validators.required],
+            categoryId:['',Validators.required],
           subcategoryStatus:['',Validators.required]
-        }
-    )
+        })
+      if(this.route.snapshot.params['data']){
+          this.urlData=JSON.parse(decodeURIComponent(this.route.snapshot.params['data']))
+      }
   }
 
   ngOnInit(): void {
+      if(this.route.snapshot.params['data']) {
+          this.addSubCategoryForm.patchValue({
+              subcategoryId: this.urlData.subcategoryId,
+              subcategoryName: this.urlData.subcategoryName,
+              categoryId: this.urlData.categoryId,
+              subcategoryStatus: this.urlData.subcategoryStatus,
+          })
+      }
   }
 
   onAddSubCategoryFormSave(){
-    this.addSubCategoryForm.value.subcategoryId = this.uniqeId()
-      console.log(this.addSubCategoryForm.value)
-      // if(this.addSubCategoryForm.valid){
-      //     this.SubcategoryData = this.addSubCategoryForm.value;
-      //     console.log(this.SubcategoryData)
-      //     this.isSubmitted = this.adminApiService.addSubCategoryService(this.SubcategoryData);
-      //     swal.fire({
-      //         icon:'success',
-      //         title:'success',
-      //         text:'Sub category Added successfully',
-      //     }).then(res=>{
-      //         if(res){
-      //             this.router.navigate(['/home/sub-category-management'])
-      //         }
-      //     })
-      // }
+      if(this.addSubCategoryForm.valid){
+          if(this.route.snapshot.params['data']){
+               this.isSubmitted = this.adminApiService.updateSubCategoryService(this.addSubCategoryForm.value);
+          }else{
+              this.addSubCategoryForm.value.subcategoryId = this.uniqeId()
+              this.SubcategoryData = this.addSubCategoryForm.value;
+              this.isSubmitted = this.adminApiService.addSubCategoryService(this.SubcategoryData);
+          }
+          if(this.isSubmitted){
+              swal.fire({
+                  icon:'success',
+                  title:'success',
+                  text:'Sub category Added successfully',
+              }).then(res=>{
+                  if(res){
+                      this.router.navigate(['/home/sub-category-management'])
+                  }
+              })
+          }
+
+
+      }
   }
     uniqeId(length: number=6) {
         return Math.random().toString(36).substring(2, length + 2);

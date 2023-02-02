@@ -10,24 +10,42 @@
     </mat-form-field>
 
     <div class="mat-elevation-z8">
-        <table [dataSource]="dataSource" mat-table >
+        <table [dataSource]="dataSource" mat-table>
 
             <!-- ID Column -->
             <ng-container matColumnDef="id">
-                <th *matHeaderCellDef mat-header-cell > ID </th>
-                <td *matCellDef="let row; let i=index" mat-cell >{{i+1}} </td>
+                <th *matHeaderCellDef mat-header-cell> ID</th>
+                <td *matCellDef="let row; let i=index" mat-cell>{{i + 1}} </td>
             </ng-container>
 
             <ng-container matColumnDef="categoryname">
-                <th *matHeaderCellDef mat-header-cell > Category Name </th>
+                <th *matHeaderCellDef mat-header-cell> Category Name</th>
                 <td *matCellDef="let row" mat-cell> {{row.categoryName}} </td>
             </ng-container>
 
             <ng-container matColumnDef="status">
-                <th *matHeaderCellDef mat-header-cell  > Status ( 0 - Active, 1 - Inactive)</th>
-                <td *matCellDef="let row" mat-cell> {{row.categoryStatus}} </td>
+                <th *matHeaderCellDef mat-header-cell> Status</th>
+                <td *matCellDef="let row" mat-cell>
+                    <div *ngIf="this.row.categoryStatus == 1; then thenBlock else elseBlock"></div>
+                    <ng-template #thenBlock>
+                        <mat-slide-toggle (change)="statusChange($event,row)" [checked]="true"></mat-slide-toggle>
+                    </ng-template>
+                    <ng-template #elseBlock>
+                        <mat-slide-toggle (change)="statusChange($event,row)"></mat-slide-toggle>
+                    </ng-template>
+                </td>
             </ng-container>
-
+            <ng-container matColumnDef="action">
+                <th *matHeaderCellDef mat-header-cell> Actions</th>
+                <td *matCellDef="let row;">
+                    <button mat-icon-button>
+                        <mat-icon (click)="editCategory($event,row)" color="green"  >edit</mat-icon>
+                    </button>
+                    <button mat-icon-button>
+                        <mat-icon (click)="onDeleteCategory($event,row)" color="warn">delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
 
 
             <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
@@ -35,7 +53,7 @@
 
             <!-- Row shown when there is no matching data. -->
             <tr *matNoDataRow class="mat-row">
-                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                <td class="mat-cell" colspan="4">No Data Found "{{input.value}}"</td>
             </tr>
         </table>
 

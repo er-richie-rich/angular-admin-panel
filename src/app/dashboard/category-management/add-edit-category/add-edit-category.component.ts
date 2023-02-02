@@ -16,24 +16,37 @@ export class AddEditCategoryComponent implements OnInit {
     randomId:any
     categoryData: any
     isSubmitted: boolean = false;
-    constructor(private fb: FormBuilder, private router:Router,private adminApiService: AdminApiService) {
+    urlData:any
+    constructor(private fb: FormBuilder, private router:Router,private adminApiService: AdminApiService,private route:ActivatedRoute) {
         this.addCategoryForm = this.fb.group(
             {
                 categoryId:[''],
                 categoryName:['',Validators.required],
                 categoryStatus:['',Validators.required]
-            }
-        )
+            })
+        if(this.route.snapshot.params['data']){
+            this.urlData=JSON.parse(decodeURIComponent(this.route.snapshot.params['data']))
+        }
     }
     ngOnInit(): void {
+        if(this.route.snapshot.params['data']) {
+            this.addCategoryForm.patchValue({
+                categoryId: this.urlData.categoryId,
+                categoryName: this.urlData.categoryName,
+                categoryStatus: this.urlData.categoryStatus,
+            })
+        }
     }
 
     onAddCategoryFormSave(){
-       this.addCategoryForm.value.categoryId = uniqeId()
         if(this.addCategoryForm.valid){
-            this.categoryData = this.addCategoryForm.value;
-            console.log(this.categoryData)
-            this.isSubmitted = this.adminApiService.addCategoryService(this.categoryData);
+            if(this.route.snapshot.params['data']){
+                this.isSubmitted = this.adminApiService.updateCategoryService(this.addCategoryForm.value);
+            }else{
+                this.addCategoryForm.value.categoryId = uniqeId()
+                this.categoryData = this.addCategoryForm.value;
+                this.isSubmitted = this.adminApiService.addCategoryService(this.categoryData);
+            }
             swal.fire({
                 icon:'success',
                 title:'success',

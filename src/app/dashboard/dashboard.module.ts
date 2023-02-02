@@ -12,6 +12,7 @@ import { SubCategoryManagementComponent } from './sub-category-management/sub-ca
 import { AddEditCategoryComponent } from './category-management/add-edit-category/add-edit-category.component';
 import { AddEditSubcategoryComponent } from './sub-category-management/add-edit-subcategory/add-edit-subcategory.component';
 import {FormsModule,ReactiveFormsModule} from "@angular/forms";
+import { MyAccountComponent } from './user-management/my-account/my-account.component';
 @NgModule({
   declarations: [
     UserManagementComponent,
@@ -21,7 +22,8 @@ import {FormsModule,ReactiveFormsModule} from "@angular/forms";
     CategoryManagementComponent,
     SubCategoryManagementComponent,
     AddEditCategoryComponent,
-    AddEditSubcategoryComponent
+    AddEditSubcategoryComponent,
+    MyAccountComponent
   ],
   imports: [
     CommonModule,

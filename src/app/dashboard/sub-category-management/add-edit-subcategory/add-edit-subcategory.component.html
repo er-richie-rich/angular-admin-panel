@@ -26,12 +26,12 @@
                             <div class="form-field">
                                 <mat-form-field appearance="outline"  class="element-full-width" >
                                     <mat-label>Category Name</mat-label>
-                                    <mat-select formControlName="categoryName" name="categoryName" >
+                                    <mat-select formControlName="categoryId" name="categoryId" >
                                         <mat-option *ngFor="let catagory of categoriesarr" [value]="catagory.categoryId">
                                             {{catagory.categoryName}}
                                         </mat-option>
                                     </mat-select>
-                                    <mat-error *ngIf="addSubCategoryForm.get('categoryName')!.hasError('required')">THIS FIELD IS REQUIRED.
+                                    <mat-error *ngIf="addSubCategoryForm.get('categoryId')!.hasError('required')">THIS FIELD IS REQUIRED.
                                     </mat-error>
                                 </mat-form-field>
                             </div>
@@ -41,8 +41,8 @@
                                 <mat-form-field appearance="outline"  class="element-full-width">
                                     <mat-label>Status</mat-label>
                                     <mat-select autocomplete="off" formControlName="subcategoryStatus"  matNativeControl name="subcategoryStatus"  required >
-                                        <mat-option value="0">Active</mat-option>
-                                        <mat-option value="1">Inactive</mat-option>
+                                        <mat-option value="1">Active</mat-option>
+                                        <mat-option value="0">Inactive</mat-option>
                                     </mat-select>
                                     <mat-error *ngIf="addSubCategoryForm.get('subcategoryStatus')!.hasError('required')">THIS FIELD IS REQUIRED.
                                     </mat-error>

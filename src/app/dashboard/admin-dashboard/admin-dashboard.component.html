@@ -2,10 +2,10 @@
     <h3>Total Products</h3>
     <div class="row">
         <div class="col-sm-3">
-            <div class="info-box box-style"
+            <div class="info-box box-style" routerLink="/home/product-management"
                  style="background-color: #999;background-image: url('assets/images/leave-icon-bg.png');">
                 <div class="box-top">
-                    <h3>Total Products</h3>
+                    <h3>Total Products : {{totalProducts}}</h3>
                 </div>
                 <div class="box-icon">
                     <img alt="icon" height="100px" src="assets/images/product.png" width="100px"/>
@@ -16,13 +16,13 @@
     <h3>Total Users</h3>
     <div class="row">
         <div class="col-sm-3">
-            <div class="info-box box-style"
+            <div class="info-box box-style" routerLink="/home/user-management"
                  style="background-color: #999;background-image: url('assets/images/total-employees-icon-bg.png');">
                 <div class="box-top">
-                    <h3>Total Users</h3>
+                    <h3>Total Users : {{totalUsers}}</h3>
                 </div>
                 <div class="box-icon">
-                    <img alt="icon" height="100px" src="assets/images/total-employees-icon.svg" width="100px"/>
+                    <img  alt="icon" height="100px" src="assets/images/total-employees-icon.svg" width="100px"/>
                 </div>
             </div>
         </div>
@@ -30,10 +30,10 @@
     <h3>Categories</h3>
     <div class="row">
         <div class="col-sm-3">
-            <div class="info-box box-style"
+            <div class="info-box box-style" routerLink="/home/category-management"
                  style="background-color: #999;background-image: url('assets/images/leave-new-icon-bg.png');">
                 <div class="box-top">
-                    <h3>Total Category</h3>
+                    <h3>Total Category : {{totalCategory}} </h3>
                 </div>
                 <div class="box-icon">
                     <img alt="icon" height="100px" src="assets/images/category.png" width="100px"/>
@@ -41,10 +41,10 @@
             </div>
         </div>
         <div class="col-sm-3">
-            <div class="info-box box-style"
+            <div class="info-box box-style" routerLink="/home/sub-category-management"
                  style="background-color: #999;background-image: url('assets/images/approved-leave-icon-bg.png');">
                 <div class="box-top">
-                    <h3>Total Sub Category</h3>
+                    <h3>Total Sub Category : {{totalSubCategory}}</h3>
                 </div>
                 <div class="box-icon">
                     <img alt="icon" height="100px" src="assets/images/subcategory.png" width="100px"/>

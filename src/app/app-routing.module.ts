@@ -9,6 +9,7 @@ import {CategoryManagementComponent} from "./dashboard/category-management/categ
 import {SubCategoryManagementComponent} from "./dashboard/sub-category-management/sub-category-management.component";
 import {AddEditCategoryComponent} from "./dashboard/category-management/add-edit-category/add-edit-category.component";
 import {AddEditSubcategoryComponent} from "./dashboard/sub-category-management/add-edit-subcategory/add-edit-subcategory.component";
+import {MyAccountComponent} from "./dashboard/user-management/my-account/my-account.component";
 
 
 const routes: Routes = [
@@ -19,7 +20,11 @@ const routes: Routes = [
             {path: '', component: AdminDashboardComponent, data: {title: 'Dashboard'}},
 
             {path: 'user-management', component: UserManagementComponent, data: {title: 'User Management'}},
-
+            {
+                path: 'my-account',
+                component: MyAccountComponent,
+                data: {title: 'My Account'}
+            },
             /*{path: 'Product-management', component: ProductManagementComponent, data: {title: 'Product Management'}
                 ,children:[
                     {path:'add-product',component:AddEditProductComponent ,data: {title: 'Add Products'}},
@@ -45,6 +50,7 @@ const routes: Routes = [
                 component: AddEditSubcategoryComponent,
                 data: {title: 'Add-Edit Sub Category'}
             },
+
         ], data: {title: 'Dashboard'},
     }
 ];

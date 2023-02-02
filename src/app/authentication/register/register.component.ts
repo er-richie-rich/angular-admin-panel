@@ -19,6 +19,7 @@ export class RegisterComponent implements OnInit {
 
     constructor(private fb: FormBuilder,private router: Router ,private _location: Location, private adminApiService: AdminApiService) {
         this.registerForm = this.fb.group({
+            userId:[''],
             fullName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(40)]],
             birthDate: ["",[Validators.required]],
             mobile: ["",[Validators.required, Validators.minLength(10), Validators.maxLength(15)]],
@@ -51,6 +52,7 @@ export class RegisterComponent implements OnInit {
 
     onSubmit() {
         if (this.registerForm.valid) {
+            this.registerForm.value.userId = this.uniqeId()
             this.userData = this.registerForm.value;
             this.isSubmitted = this.adminApiService.registerUserService(this.userData);
             swal.fire({
@@ -67,5 +69,9 @@ export class RegisterComponent implements OnInit {
 
     backClicked() {
         this._location.back();
+    }
+
+    uniqeId(length: number=6) {
+        return Math.random().toString(36).substring(2, length + 2);
     }
 }

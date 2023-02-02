@@ -376,7 +376,7 @@ span.mat-option-text {
 }
 
 textarea.mat-input-element {
-  height: 100px;
+
   resize: none;
 }
 
@@ -1224,6 +1224,7 @@ ul.view-list {
 /* My account page */
 .account-wrapper {
   display: flex;
+  width: 50%;
 
   .form-content-box {
     width: 100%;
