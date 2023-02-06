@@ -1,17 +1,18 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {MatSort} from "@angular/material/sort";
+import {MatSort,MatSortable} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {AdminApiService} from "../../../Service/admin-api.service";
-import {categoryData} from "../category-management/category-management.component";
 import Swal from "sweetalert2";
 import {ActivatedRoute, Router} from "@angular/router";
+import {ConfirmDeletePopupComponent} from "../../popup/confirm-delete-popup/confirm-delete-popup.component";
+import {MatDialog} from "@angular/material/dialog";
 
 export interface subcategoryData {
     id: string;
-    subcategoryname: string;
+    subcategoryName: string;
     subcategoryStatus: string;
-    catagoryid: string;
+    categoryId: string;
     action: any
 }
 
@@ -20,15 +21,15 @@ export interface subcategoryData {
     templateUrl: './sub-category-management.component.html',
     styleUrls: ['./sub-category-management.component.scss']
 })
-export class SubCategoryManagementComponent implements OnInit {
-    displayedColumns: string[] = ['id', 'subcategoryname', 'subcategoryStatus', 'catagoryid', 'action'];
-    dataSource: MatTableDataSource<categoryData>;
+export class SubCategoryManagementComponent implements OnInit,AfterViewInit {
+    displayedColumns: string[] = ['id', 'subcategoryName', 'subcategoryStatus', 'categoryId', 'action'];
+    dataSource: MatTableDataSource<subcategoryData>;
     subcategories = this.adminApiService.listSubCategoryService()
     categories = this.adminApiService.listCategoryService()
     @ViewChild(MatPaginator) paginator: any = MatPaginator;
-    @ViewChild(MatSort) sort: any = MatSort;
+    @ViewChild(MatSort) sort: any = new MatSort;
 
-    constructor(private adminApiService: AdminApiService,private router:Router, private     route:ActivatedRoute) {
+    constructor(private adminApiService: AdminApiService,private router:Router, private route:ActivatedRoute, public dialog: MatDialog) {
         for (let i = 0; i < this.subcategories.length; i++) {
             for (let j = 0; j < this.categories.length; j++) {
                 if (this.subcategories[i].categoryId === this.categories[j].categoryId) {
@@ -40,10 +41,12 @@ export class SubCategoryManagementComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.dataSource.sort = this.sort;
     }
 
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
     }
 
     applyFilter(event: Event) {
@@ -55,69 +58,62 @@ export class SubCategoryManagementComponent implements OnInit {
     }
 
     statusChange(e: any, row: any) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You want to change status!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: 'warn',
-            cancelButtonColor: 'warn',
-            confirmButtonText: 'Change it'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire(
-                    'Changed!',
-                    'Your status has been changed.',
-                    'success'
-                )
-                if (e.checked == true) {
-                    for (let i = 0; i < this.subcategories.length; i++) {
-                        if (this.subcategories[i].categoryId == row.categoryId) {
-                            this.subcategories[i].categoryStatus = 1;
-                        }
-                    }
-                } else {
-                    for (let i = 0; i < this.subcategories.length; i++) {
-                        if (this.subcategories[i].categoryId == row.categoryId) {
-                            this.subcategories[i].categoryStatus = 0;
-                        }
+
+            const dialogRef = this.dialog.open(ConfirmDeletePopupComponent, {
+                width: "500px",
+                data: {message: 'Are you sure you want to change status ?'}
+            });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    let isSubmitted = this.adminApiService.changeSubCategoryStatusService(e, row)
+                    if (isSubmitted == true) {
+                        Swal.fire(
+                            'changed!',
+                            'Your category Status has been changed.',
+                            'success').then(function () {
+                            location.reload()
+                        });
+                    } else {
+                        Swal.fire(
+                            'failed!',
+                            'Something went to wrong !',
+                            'error')
                     }
                 }
-                localStorage.setItem('subcategoryList', JSON.stringify(this.subcategories));
-            } else {
-                location.reload()
-            }
-        })
-    }
+            })
+        }
+
     onDeleteSubCategory(e: any, row: any) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You want to delete category!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: 'warn',
-            cancelButtonColor: 'warn',
-            confirmButtonText: 'Delete'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire(
-                    'Deleted!',
-                    'Your category has been deleted.',
-                    'success'
-                )
-                for (let i = 0; i < this.subcategories.length; i++) {
-                    if (this.subcategories[i].subcategoryId == row.subcategoryId) {
-                        this.subcategories.splice(i, 1);
-                    }
+        const dialogRef = this.dialog.open(ConfirmDeletePopupComponent, {
+            width: "500px",
+            data: {message: 'Are you sure you want to delete this sub category ?'}
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                let isSubmitted = this.adminApiService.deleteSubCategoryService(row)
+                if (isSubmitted == true) {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your sub category has been deleted.',
+                        'success').then(function () {
+                        location.reload()
+                    });
+                } else {
+                    Swal.fire(
+                        'failed!',
+                        'Something went to wrong !',
+                        'error')
                 }
-                localStorage.setItem('subcategoryList', JSON.stringify(this.subcategories));
             }
-            location.reload()
         })
     }
 
     editSubcategory(event:any,parameterData:any){
         let rowData=encodeURIComponent(JSON.stringify(parameterData))
         this.router.navigate(['/home/sub-category-management/add-edit-subcategory',{data:rowData}])
+    }
+    sortDataSource(id: any, start: any){
+        let sortedData: any;
+        sortedData = this.dataSource.data.sort(this.subcategories({id: id, start: start}));
     }
 }

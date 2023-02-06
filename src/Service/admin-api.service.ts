@@ -140,6 +140,36 @@ export class AdminApiService {
     listCategoryService() {
         return this.categoryList;
     }
+    // delete category service
+    deleteCategoryService(row:any){
+        for(let i = 0; i <this.categoryList.length; i++) {
+            if(this.categoryList[i].categoryId == row.categoryId) {
+                this.categoryList.splice(i, 1);
+            }
+        }
+        localStorage.setItem('categoryList', JSON.stringify(this.categoryList));
+        return true
+    }
+
+    // Change category status service
+    changeCategoryStatusService(e:any,row:any){
+        if (e.checked == true) {
+            for (let i = 0; i < this.categoryList.length; i++) {
+                if (this.categoryList[i].categoryId == row.categoryId) {
+                    this.categoryList[i].categoryStatus = 1;
+                }
+            }
+        } else {
+            for (let i = 0; i < this.categoryList.length; i++) {
+                if (this.categoryList[i].categoryId == row.categoryId) {
+                    this.categoryList[i].categoryStatus = 0;
+                }
+            }
+        }
+        localStorage.setItem('categoryList', JSON.stringify(this.categoryList));
+        return true
+    }
+
 
     // add sub category service
     addSubCategoryService(subcategoryItem: any) {
@@ -159,13 +189,42 @@ export class AdminApiService {
         return true
         }
 
-
-
-
      // list category service
     listSubCategoryService() {
         return this.subcategoryList;
     }
+
+    // delete category service
+    deleteSubCategoryService(row:any){
+        for (let i = 0; i < this.subcategoryList.length; i++) {
+            if (this.subcategoryList[i].subcategoryId == row.subcategoryId) {
+                this.subcategoryList.splice(i, 1);
+            }
+        }
+        localStorage.setItem('subcategoryList', JSON.stringify(this.subcategoryList));
+        return true
+    }
+
+    // Change category status service
+    changeSubCategoryStatusService(e:any,row:any){
+        if (e.checked == true) {
+            for (let i = 0; i < this.subcategoryList.length; i++) {
+                if (this.subcategoryList[i].subcategoryId == row.subcategoryId) {
+                    this.subcategoryList[i].subcategoryStatus = 1;
+                }
+            }
+        } else {
+            for (let i = 0; i < this.subcategoryList.length; i++) {
+                if (this.subcategoryList[i].subcategoryId == row.subcategoryId) {
+                    this.subcategoryList[i].subcategoryStatus = 0;
+                }
+            }
+        }
+        localStorage.setItem('subcategoryList', JSON.stringify(this.subcategoryList));
+        return true
+    }
+
+
 
     // add product service
     addProductService(productItem: any) {
@@ -174,10 +233,51 @@ export class AdminApiService {
         return true;
     }
 
+    // update product service
+    updateProductService(productItem: any){
+        for (let i = 0; i < this.productList.length; i++) {
+            if(this.productList[i].productId == productItem.productId){
+                this.productList[i] =  productItem
+            }
+        }
+        localStorage.setItem('productList', JSON.stringify(this.productList));
+        return true
+    }
+
     // list product service
     listProductService() {
         return this.productList;
     }
+
+    // Change product status service
+    changeProductStatusService(e:any,row:any){
+        if (e.checked == true) {
+            for (let i = 0; i < this.productList.length; i++) {
+                if (this.productList[i].productId == row.productId) {
+                    this.productList[i].productStatus = 1;
+                }
+            }
+        } else {
+            for (let i = 0; i < this.productList.length; i++) {
+                if (this.productList[i].productId == row.productId) {
+                    this.productList[i].productStatus = 0;
+                }
+            }
+        }
+        localStorage.setItem('productList', JSON.stringify(this.productList));
+        return true
+    }
+    // delete product Service
+    deleteProductService(e:any,row:any){
+        for(let i = 0; i <this.productList.length; i++) {
+            if(this.productList[i].productId == row.productId) {
+                this.productList.splice(i, 1);
+            }
+        }
+        localStorage.setItem('productList', JSON.stringify(this.productList));
+        return true
+    }
+
 
     //Update user service
     updateUserService(paraEmail:any,updateData:any){

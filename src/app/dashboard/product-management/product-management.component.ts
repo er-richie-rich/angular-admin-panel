@@ -1,12 +1,15 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild,AfterViewInit} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {MatSort} from "@angular/material/sort";
+import {MatSort,MatSortable} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {AdminApiService} from "../../../Service/admin-api.service";
 import Swal from "sweetalert2";
 import {Validators} from "@angular/forms";
 import {categoryData} from "../category-management/category-management.component";
 import {Router} from "@angular/router";
+import {ConfirmDeletePopupComponent} from "../../popup/confirm-delete-popup/confirm-delete-popup.component";
+import {MatDialog} from "@angular/material/dialog";
+
 
 export interface productData {
   id: string;
@@ -25,16 +28,15 @@ export interface productData {
   templateUrl: './product-management.component.html',
   styleUrls: ['./product-management.component.scss']
 })
-export class ProductManagementComponent implements OnInit {
+export class ProductManagementComponent implements OnInit,AfterViewInit {
   displayedColumns: string[] = ['id', 'productCode', 'productName', 'categoryName','subCategoryName','productPrice','productStock','productDescription','productStatus','action'];
-  dataSource: MatTableDataSource<categoryData>;
+  dataSource: MatTableDataSource<productData>;
   products: any = this.adminApiService.listProductService()
   categories=this.adminApiService.listCategoryService()
   subcategories=this.adminApiService.listSubCategoryService()
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
-  @ViewChild(MatSort) sort: any = MatSort;
-
-  constructor(private adminApiService: AdminApiService,private router:Router) {
+  @ViewChild(MatSort) sort: any = new MatSort;
+  constructor(private adminApiService: AdminApiService,private router:Router , private dialog:MatDialog) {
     for (let i = 0; i < this.products.length; i++) {
       for (let j = 0; j < this.categories.length; j++) {
         if (this.products[i].categoryId == this.categories[j].categoryId) {
@@ -53,9 +55,11 @@ export class ProductManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dataSource.sort = this.sort;
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -64,73 +68,70 @@ export class ProductManagementComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-
   statusChange(e: any, row: any) {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You want to change status!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: 'warn',
-      cancelButtonColor: 'warn',
-      confirmButtonText: 'Change it'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire(
-            'Changed!',
-            'Your status has been changed.',
-            'success'
-        )
-        if (e.checked == true) {
-          for (let i = 0; i < this.products.length; i++) {
-            if (this.products[i].productId == row.productId) {
-              this.products[i].productStatus = 1;
-            }
-          }
+    const dialogRef = this.dialog.open(ConfirmDeletePopupComponent, {
+      width: "500px",
+      data: {message: 'Are you sure you want to change status ?'}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        let isSubmitted = this.adminApiService.changeProductStatusService(e, row)
+        if (isSubmitted == true) {
+          Swal.fire(
+              'changed!',
+              'Your category Status has been changed.',
+              'success').then(function () {
+            location.reload()
+          });
         } else {
-          for (let i = 0; i < this.products.length; i++) {
-            if (this.products[i].productId == row.productId) {
-              this.products[i].productStatus = 0;
-            }
-          }
+          Swal.fire(
+              'failed!',
+              'Something went to wrong !',
+              'error')
         }
-        localStorage.setItem('productList', JSON.stringify(this.products));
-      } else {
-        location.reload()
       }
     })
   }
-
-
+  ;
   onDeleteProduct(e:any,row:any) {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You want to delete category!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: 'warn',
-      cancelButtonColor: 'warn',
-      confirmButtonText: 'Delete'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire(
-            'Deleted!',
-            'Your category has been deleted.',
-            'success'
-        )
-        for(let i = 0; i <this.products.length; i++) {
-          if(this.products[i].productId == row.productId) {
-            this.products.splice(i, 1);
-          }
+    const dialogRef = this.dialog.open(ConfirmDeletePopupComponent, {
+      width: "500px",
+      data: {message: 'Are you sure you want to delete this product ?'}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        let isSubmitted = this.adminApiService.deleteProductService(e,row)
+        if (isSubmitted == true) {
+          Swal.fire(
+              'Deleted!',
+              'Your category has been deleted.',
+              'success').then(function () {
+                location.reload()
+          });
+        } else {
+          Swal.fire(
+              'failed!',
+              'Something went to wrong !',
+              'error')
         }
-        localStorage.setItem('productList', JSON.stringify(this.products));
       }
-      location.reload()
     })
   }
-
   editProduct(event:any,parameterData:any){
     let rowData=encodeURIComponent(JSON.stringify(parameterData))
     this.router.navigate(['/home/product-management/add-edit-product',{data:rowData}])
   }
+  sortDataSource(id: any, start: any){
+    let sortedData: any;
+    sortedData = this.dataSource.data.sort(this.products({id: id, start: start}));
+  }
+  // sortData(name:any){
+  //   let sortedData = this.products.sort(function(a:any,b:any){
+  //     let x = a.name.toString()
+  //     let y = b.name.toString()
+  //     if(x>y){return 1;}
+  //     if(x<y){return -1;}
+  //     return 0;
+  //   });
+  // }
 }

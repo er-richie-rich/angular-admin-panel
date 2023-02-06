@@ -11,21 +11,21 @@
     </mat-form-field>
 
     <div class="mat-elevation-z8">
-        <table [dataSource]="dataSource" mat-table>
+        <table [dataSource]="dataSource" mat-table matSort>
 
             <!-- ID Column -->
             <ng-container matColumnDef="id">
-                <th *matHeaderCellDef mat-header-cell> ID</th>
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> ID</th>
                 <td *matCellDef="let row; let i=index" mat-cell>{{i + 1}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="subcategoryname">
-                <th *matHeaderCellDef mat-header-cell> Subategory Name</th>
+            <ng-container matColumnDef="subcategoryName">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Subategory Name</th>
                 <td *matCellDef="let row" mat-cell> {{row.subcategoryName}} </td>
             </ng-container>
 
             <ng-container matColumnDef="subcategoryStatus">
-                <th *matHeaderCellDef mat-header-cell> Subategory Status</th>
+                <th *matHeaderCellDef mat-header-cell > Subategory Status</th>
                 <td *matCellDef="let row" mat-cell>
                     <div *ngIf="this.row.subcategoryStatus == 1; then thenBlock else elseBlock"></div>
                     <ng-template #thenBlock>
@@ -36,8 +36,8 @@
                     </ng-template>
                 </td>
             </ng-container>
-            <ng-container matColumnDef="catagoryid">
-                <th *matHeaderCellDef mat-header-cell> Category Name</th>
+            <ng-container matColumnDef="categoryId">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Category Name</th>
                 <td *matCellDef="let row" mat-cell> {{row.categoryName}} </td>
             </ng-container>
             <ng-container matColumnDef="action">

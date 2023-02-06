@@ -3,48 +3,51 @@
       <div class="float-start" style="font-size: 16px; width:90%;padding: 5px;">Product Management</div>
       <button color="warn" mat-raised-button routerLink="add-edit-product">Add Product</button>
    </div>
-
+<!--   <button mat-raised-button (click)="sortDataSource('weight', 'asc')">ASC</button>-->
+<!--   <button mat-raised-button (click)="sortDataSource('weight', 'desc')">-->
+<!--      DESC-->
+<!--   </button>-->
    <mat-form-field class="mt-3 ms-3">
       <mat-label>Filter</mat-label>
       <input #input (keyup)="applyFilter($event)" matInput placeholder="Ex. Mia">
    </mat-form-field>
 
    <div class="mat-elevation-z8">
-      <table [dataSource]="dataSource" mat-table>
+      <table [dataSource]="dataSource" mat-table matSort >
 
          <!-- ID Column -->
          <ng-container matColumnDef="id">
-            <th *matHeaderCellDef mat-header-cell> ID</th>
+            <th   *matHeaderCellDef  mat-header-cell mat-sort-header > ID</th>
             <td *matCellDef="let row; let i=index" mat-cell>{{i + 1}} </td>
          </ng-container>
 
          <ng-container matColumnDef="productCode">
-            <th *matHeaderCellDef mat-header-cell> Product Code</th>
+            <th *matHeaderCellDef mat-header-cell  mat-sort-header> Product Code</th>
             <td *matCellDef="let row" mat-cell> {{row.productCode}} </td>
          </ng-container>
 
          <ng-container matColumnDef="productName">
-            <th *matHeaderCellDef mat-header-cell> Product Name</th>
+            <th  *matHeaderCellDef mat-header-cell mat-sort-header> Product Name</th>
             <td *matCellDef="let row" mat-cell> {{row.productName}} </td>
          </ng-container>
          <ng-container matColumnDef="categoryName">
-            <th *matHeaderCellDef mat-header-cell> Category Name</th>
+            <th *matHeaderCellDef mat-header-cell  mat-sort-header> Category Name</th>
             <td *matCellDef="let row" mat-cell> {{row.categoryName}} </td>
          </ng-container>
          <ng-container matColumnDef="subCategoryName">
-            <th *matHeaderCellDef mat-header-cell> Sub Category Name</th>
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> Sub Category Name</th>
             <td *matCellDef="let row" mat-cell> {{row.subcategoryName}} </td>
          </ng-container>
-         <ng-container matColumnDef="productPrice">
-            <th *matHeaderCellDef mat-header-cell> Product Price</th>
+         <ng-container matColumnDef="productPrice" >
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> Product Price</th>
             <td *matCellDef="let row" mat-cell> {{row.productPrice}} </td>
          </ng-container>
          <ng-container matColumnDef="productStock">
-            <th *matHeaderCellDef mat-header-cell> Product Stock</th>
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> Product Stock</th>
             <td *matCellDef="let row" mat-cell> {{row.productStock}} </td>
          </ng-container>
-         <ng-container matColumnDef="productDescription">
-            <th *matHeaderCellDef mat-header-cell> Product Description</th>
+         <ng-container matColumnDef="productDescription" >
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> Product Description</th>
             <td *matCellDef="let row" mat-cell> {{row.productDescription}} </td>
          </ng-container>
          <ng-container matColumnDef="productStatus">

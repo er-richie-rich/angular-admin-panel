@@ -14,13 +14,13 @@
                     <th *matHeaderCellDef mat-header-cell> ID</th>
                     <td *matCellDef="let row; let i=index" mat-cell>{{i + 1}} </td>
                 </ng-container>
-                <ng-container matColumnDef="fullname">
+                <ng-container matColumnDef="fullName">
                     <th *matHeaderCellDef mat-header-cell mat-sort-header> Full Name</th>
                     <td *matCellDef="let row" mat-cell> {{row.fullName}}</td>
                 </ng-container>
 
 
-                <ng-container matColumnDef="birthdate">
+                <ng-container matColumnDef="birthDate">
                     <th *matHeaderCellDef mat-header-cell mat-sort-header> Birth Date</th>
                     <td *matCellDef="let row" mat-cell> {{row.birthDate |  date : "dd/MM/YYYY"}} </td>
                 </ng-container>

@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {Location} from "@angular/common";
+import {DatePipe, Location} from "@angular/common";
 import {Validators, FormBuilder, FormGroup, FormControl} from '@angular/forms';
 import {AdminApiService} from "../../../Service/admin-api.service";
 import swal from 'sweetalert2'
 import {Router} from "@angular/router";
+import {birthDateValidation} from "./register.custom.validators";
+
 
 
 @Component({
@@ -16,8 +18,12 @@ export class RegisterComponent implements OnInit {
     userList: any
     userData: any
     isSubmitted: boolean = false;
+    maxDate : any;
+    minDate : any;
+    currentDate = new Date();
+    minBirthDate: any;
 
-    constructor(private fb: FormBuilder,private router: Router ,private _location: Location, private adminApiService: AdminApiService) {
+    constructor(private fb: FormBuilder,private router: Router ,private _location: Location, private adminApiService: AdminApiService,private dateFormate:DatePipe,) {
         this.registerForm = this.fb.group({
             userId:[''],
             fullName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(40)]],
@@ -26,10 +32,17 @@ export class RegisterComponent implements OnInit {
             email: ['', [Validators.required, Validators.pattern('\\w+([-+.]\\w+)*@yahoo.(com|in)|gmail.(com|in)|hotmail.(com|in)|redmail.(com|in)|microsoft.(com|in)')]],
             password: ['', [Validators.required]]
         });
+
+        this.registerForm.setValidators(birthDateValidation(this.dateFormate))
     }
 
     ngOnInit(): void {
         // console.log(this.registerForm.get('mobile'))
+
+        let minDay = this.currentDate.getDate();
+        let minMonth = this.currentDate.getMonth();
+        let minYear = this.currentDate.getFullYear() - 18;
+        this.minBirthDate = new Date(minYear, minMonth, minDay);
     }
 
     // alert(){
@@ -74,4 +87,5 @@ export class RegisterComponent implements OnInit {
     uniqeId(length: number=6) {
         return Math.random().toString(36).substring(2, length + 2);
     }
+
 }

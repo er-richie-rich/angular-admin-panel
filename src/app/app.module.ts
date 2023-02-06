@@ -18,6 +18,8 @@ import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {HeaderComponent} from "./core/header/header.component";
 import {FooterComponent} from "./core/footer/footer.component";
 import {SidenavComponent} from "./core/sidenav/sidenav.component";
+import { ConfirmDeletePopupComponent } from './popup/confirm-delete-popup/confirm-delete-popup.component';
+import {MatSortModule} from "@angular/material/sort";
 
 
 @NgModule({
@@ -28,7 +30,8 @@ import {SidenavComponent} from "./core/sidenav/sidenav.component";
         HomeLayoutComponent,
         HeaderComponent,
         FooterComponent,
-        SidenavComponent
+        SidenavComponent,
+        ConfirmDeletePopupComponent
     ],
     imports: [
         BrowserModule,
@@ -39,7 +42,9 @@ import {SidenavComponent} from "./core/sidenav/sidenav.component";
         DashboardModule,
         ReactiveFormsModule,
         FormsModule,
+        MatSortModule
     ],
+    exports:[MatSortModule],
     providers: [DatePipe,LowerCasePipe,{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' } ,Title],
     bootstrap: [AppComponent]
 })

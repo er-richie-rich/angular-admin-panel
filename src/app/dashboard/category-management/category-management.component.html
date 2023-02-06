@@ -10,21 +10,21 @@
     </mat-form-field>
 
     <div class="mat-elevation-z8">
-        <table [dataSource]="dataSource" mat-table>
+        <table [dataSource]="dataSource" mat-table matSort>
 
             <!-- ID Column -->
             <ng-container matColumnDef="id">
-                <th *matHeaderCellDef mat-header-cell> ID</th>
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> ID</th>
                 <td *matCellDef="let row; let i=index" mat-cell>{{i + 1}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="categoryname">
-                <th *matHeaderCellDef mat-header-cell> Category Name</th>
+            <ng-container matColumnDef="categoryName">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Category Name</th>
                 <td *matCellDef="let row" mat-cell> {{row.categoryName}} </td>
             </ng-container>
 
             <ng-container matColumnDef="status">
-                <th *matHeaderCellDef mat-header-cell> Status</th>
+                <th *matHeaderCellDef mat-header-cell > Status</th>
                 <td *matCellDef="let row" mat-cell>
                     <div *ngIf="this.row.categoryStatus == 1; then thenBlock else elseBlock"></div>
                     <ng-template #thenBlock>
@@ -36,7 +36,7 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="action">
-                <th *matHeaderCellDef mat-header-cell> Actions</th>
+                <th *matHeaderCellDef mat-header-cell > Actions</th>
                 <td *matCellDef="let row;">
                     <button mat-icon-button>
                         <mat-icon (click)="editCategory($event,row)" color="green"  >edit</mat-icon>

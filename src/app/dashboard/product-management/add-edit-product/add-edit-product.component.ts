@@ -29,12 +29,9 @@ export class AddEditProductComponent implements OnInit {
       productStatus:['',Validators.required],
       productDescription:['',Validators.required],
     })
-    if(this.route.snapshot.params['data']){
-      this.urlData=JSON.parse(decodeURIComponent(this.route.snapshot.params['data']))
-
-    }
     // console.log(this.urlData)
     if(this.route.snapshot.params['data']) {
+      this.urlData=JSON.parse(decodeURIComponent(this.route.snapshot.params['data']))
       this.addProductForm.patchValue({
         productId:this.urlData.productId,
         productCode:this.urlData.productCode,
@@ -43,21 +40,25 @@ export class AddEditProductComponent implements OnInit {
         subCategoryId:this.urlData.subCategoryId,
         productPrice:this.urlData.productPrice,
         productStock:this.urlData.productStock,
-        productStatus:this.urlData.productStatus,
+        productStatus:this.urlData.productStatus.toString(),
         productDescription:this.urlData.productDescription,
       })
-      // console.log("thrtehd",this.addProductForm.value)
+      this.fetchSubCategory(this.urlData.categoryId)
     }
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
 
-  }
   onSaveaddProductForm(){
-    this.addProductForm.value.productId = this.uniqeId()
     if(this.addProductForm.valid){
-      this.addProductData = this.addProductForm.value;
-      this.isSubmitted = this.adminApiService.addProductService(this.addProductData);
+      if(this.route.snapshot.params['data']){
+        this.isSubmitted = this.adminApiService.updateProductService(this.addProductForm.value);
+      }else{
+        this.addProductForm.value.productId = this.uniqeId()
+        this.addProductData = this.addProductForm.value;
+        this.isSubmitted = this.adminApiService.addProductService(this.addProductData);
+      }
+
       swal.fire({
         icon:'success',
         title:'success',
@@ -73,7 +74,7 @@ export class AddEditProductComponent implements OnInit {
   fetchSubCategory(e:any){
     this.subCategories=[]
     for(let i = 0; i <this.subCategoryArr.length; i++) {
-      if( this.subCategoryArr[i].categoryId == e.value) {
+      if( this.subCategoryArr[i].categoryId == e.value || this.subCategoryArr[i].categoryId == e) {
         this.subCategories.push(this.subCategoryArr[i]);
       }
     }

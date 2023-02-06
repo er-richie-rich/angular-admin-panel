@@ -1,14 +1,16 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {AdminApiService} from "../../../Service/admin-api.service";
 import Swal from "sweetalert2";
 import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
+import {ConfirmDeletePopupComponent} from "../../popup/confirm-delete-popup/confirm-delete-popup.component";
 
 export interface categoryData {
     id: string;
-    categoryname: string;
+    categoryName: string;
     status: string;
     action: any
 }
@@ -19,26 +21,29 @@ export interface categoryData {
     templateUrl: './category-management.component.html',
     styleUrls: ['./category-management.component.scss']
 })
-export class CategoryManagementComponent implements OnInit {
-    displayedColumns: string[] = ['id', 'categoryname', 'status', 'action'];
+export class CategoryManagementComponent implements OnInit,AfterViewInit {
+    displayedColumns: string[] = ['id', 'categoryName', 'status', 'action'];
     dataSource: MatTableDataSource<categoryData>;
     categories: any = this.adminApiService.listCategoryService()
-    @ViewChild(MatPaginator) paginator: any = MatPaginator;
-    @ViewChild(MatSort) sort: any = MatSort;
 
-    constructor(private adminApiService: AdminApiService,private router:Router) {
+    @ViewChild(MatPaginator) paginator: any = MatPaginator;
+    @ViewChild(MatSort) sort: any = new MatSort;
+
+    constructor(private adminApiService: AdminApiService, private router: Router, public dialog: MatDialog,) {
 
         this.dataSource = new MatTableDataSource(this.categories);
     }
 
     ngOnInit(): void {
+        this.dataSource.sort = this.sort;
     }
 
 
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
-
+        this.dataSource.sort = this.sort;
     }
+
     applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
         this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -46,72 +51,64 @@ export class CategoryManagementComponent implements OnInit {
             this.dataSource.paginator.firstPage();
         }
     }
+
     statusChange(e: any, row: any) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You want to change status!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: 'warn',
-            cancelButtonColor: 'warn',
-            confirmButtonText: 'Change it'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire(
-                    'Changed!',
-                    'Your status has been changed.',
-                    'success'
-                )
-                if (e.checked == true) {
-                    for (let i = 0; i < this.categories.length; i++) {
-                        if (this.categories[i].categoryId == row.categoryId) {
-                            this.categories[i].categoryStatus = 1;
-                        }
-                    }
+        const dialogRef = this.dialog.open(ConfirmDeletePopupComponent, {
+            width: "500px",
+            data: {message: 'Are you sure you want to change status ?'}
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                let isSubmitted = this.adminApiService.changeCategoryStatusService(e, row)
+                if (isSubmitted == true) {
+                    Swal.fire(
+                        'changed!',
+                        'Your category Status has been changed.',
+                        'success').then(function () {
+                        location.reload()
+                    });
                 } else {
-                    for (let i = 0; i < this.categories.length; i++) {
-                        if (this.categories[i].categoryId == row.categoryId) {
-                            this.categories[i].categoryStatus = 0;
-                        }
-                    }
+                    Swal.fire(
+                        'failed!',
+                        'Something went to wrong !',
+                        'error')
                 }
-                localStorage.setItem('categoryList', JSON.stringify(this.categories));
-            } else {
-                location.reload()
             }
         })
     }
 
 
-    onDeleteCategory(e:any,row:any) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You want to delete category!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: 'warn',
-            cancelButtonColor: 'warn',
-            confirmButtonText: 'Delete'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire(
-                    'Deleted!',
-                    'Your category has been deleted.',
-                    'success'
-                )
-                for(let i = 0; i <this.categories.length; i++) {
-                    if(this.categories[i].categoryId == row.categoryId) {
-                        this.categories.splice(i, 1);
-                    }
+    onDeleteCategory(e: any, row: any) {
+        const dialogRef = this.dialog.open(ConfirmDeletePopupComponent, {
+            width: "500px",
+            data: {message: 'Are you sure you want to delete this category ?'}
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                let isSubmitted = this.adminApiService.deleteCategoryService(row)
+                if (isSubmitted == true) {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your category has been deleted.',
+                        'success').then(function () {
+                        location.reload()
+                    });
+                } else {
+                    Swal.fire(
+                        'failed!',
+                        'Something went to wrong !',
+                        'error')
                 }
-                localStorage.setItem('categoryList', JSON.stringify(this.categories));
             }
-            location.reload()
         })
     }
 
-    editCategory(event:any,parameterData:any){
-        let rowData=encodeURIComponent(JSON.stringify(parameterData))
-        this.router.navigate(['/home/category-management/add-edit-category',{data:rowData}])
+    editCategory(event: any, parameterData: any) {
+        let rowData = encodeURIComponent(JSON.stringify(parameterData))
+        this.router.navigate(['/home/category-management/add-edit-category', {data: rowData}])
+    }
+
+    sortDataSource(id: string, start: string){
+       let SortedData= this.dataSource.data.sort(this.categories({id: id, start: start}));
     }
 }

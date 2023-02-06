@@ -9,8 +9,9 @@ import{AdminApiService} from "../../../Service/admin-api.service";
 
 export interface UserData {
   id: string;
-  fullname:string,
-  birthdate:string, mobile:string,
+  fullName:string,
+  birthDate:string,
+  mobile:string,
   email:string,
   password:string
 }
@@ -20,9 +21,9 @@ export interface UserData {
   templateUrl: './user-management.component.html',
   styleUrls: ['./user-management.component.scss']
 })
-export class UserManagementComponent implements OnInit {
-  displayedColumns: string[] = ['id','fullname', 'birthdate', 'mobile','email'];
-
+export class UserManagementComponent implements OnInit,AfterViewInit {
+  displayedColumns: string[] = ['id','fullName', 'birthDate', 'mobile','email'];
+  users:any  =this.adminApiService.listUserService()
   dataSource: any = new MatTableDataSource([]);
   selection = new SelectionModel<UserData>(true, []);
   data:any =[]
@@ -30,9 +31,8 @@ export class UserManagementComponent implements OnInit {
 
   @ViewChild(MatSort) sort:any= MatSort;
   constructor(private adminApiService:AdminApiService) {
-    const users =this.adminApiService.listUserService()
-     if(users){
-       this.dataSource = new MatTableDataSource(users) ;
+     if(this.users){
+       this.dataSource = new MatTableDataSource(this.users) ;
      }else{
        this.dataSource = new MatTableDataSource() ;
      }
@@ -53,6 +53,10 @@ export class UserManagementComponent implements OnInit {
     if (this.dataSource?.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+  sortDataSource(id: any, start: any){
+    let sortedData: any;
+    sortedData = this.dataSource.data.sort(this.users({id: id, start: start}));
   }
 }
 
